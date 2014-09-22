@@ -10,13 +10,15 @@ public class Player {
 	private float positionY;
 	private float speedofbillyX;
 	private float speedofbillyY;
+	private float minX = 45;
+	private float maxX = 885;
 	
 	public Player (float x ,float y , float speedx , float speedy) throws SlickException{
 		this.positionX = x;
 		this.positionY = y;
 		this.speedofbillyX = speedx;
 		this.speedofbillyY = speedy;
-		image = new Image("res/stick.jpg");
+		image = new Image("res/stick.png");
 	}
 
 	public void render() {
@@ -35,9 +37,15 @@ public class Player {
 	public void leftright (boolean left) {
 		if(left == true){
 			positionX -= speedofbillyX;
+			if(positionX <= minX) {
+				positionX = minX;
+			}
 		}
 		else {
 			positionX += speedofbillyX;
+			if(positionX >= maxX){
+				positionX = maxX;
+			}
 		}
 	}
 }

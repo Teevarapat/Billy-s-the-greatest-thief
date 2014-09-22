@@ -15,6 +15,7 @@ public class BillyGame extends BasicGame{
 	protected static float speedx = 5;
 	protected static float speedy = 3;
 	private Player player;
+	private MainStage stage;
 	private boolean check = false;
 	
 	public BillyGame(String title) {
@@ -38,12 +39,14 @@ public class BillyGame extends BasicGame{
 	public void init(GameContainer container) throws SlickException {
 		Color background = new Color(255, 255, 255);
 	    container.getGraphics().setBackground(background); 
-	    player = new Player(100,100, speedx , speedy);
+	    player = new Player(50,500, speedx , speedy);
+	    stage = new MainStage(30,100);
 	    
 	}
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		stage.render();
 		player.render();
 	}
 	
