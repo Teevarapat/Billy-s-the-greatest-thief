@@ -7,14 +7,17 @@ import org.newdawn.slick.SlickException;
 
 public class Ladders {
 	
-	private int positionX = 45;
-	private float positionY = 440;
-	private int minX = 45;
-	private int maxX = 885;
+	public static int positionX;
+	public int positionY;
+	private int minX = 70;
+	private int maxX = 800;
+	public static int [] checkplayer;
+	int i = 0;
+	//private int [] check = new int [3];
 	private Image image;
 	private static Random rand = new Random();
-	
-	public Ladders () throws SlickException{
+	public Ladders (int y) throws SlickException{
+		this.positionY = y;
 		image = new Image("res/bandai.png");
 		RandomPosition();
 	}
@@ -25,5 +28,19 @@ public class Ladders {
 	
 	public void RandomPosition() {
 		positionX = rand.nextInt(maxX - minX) + minX;
+		//Check();
+//		for(int i = 1; i < check.length; i++) {
+//			if(check[i-1] >= check[i] + 10 || check[i-1] <= check[i]) {
+//				check[i] += 10;
+//				if(check[i] >= 880){
+//					check[i] -= 20; 
+//				}
+//			}
+//		}
+	}
+	
+	public void Check(){
+		checkplayer[i] = positionX;
+	
 	}
 }

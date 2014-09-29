@@ -12,7 +12,7 @@ public class MainStage {
 	public MainStage (float x , float y) throws SlickException{
 		this.positionX = x;
 		this.positionY = y;
-		imagestage = new Image("res/mainstage.jpg");
+		imagestage = new Image("res/MainStage.png");
 	}
 	
 	public void render () {

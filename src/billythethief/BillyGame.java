@@ -14,9 +14,15 @@ public class BillyGame extends BasicGame{
 	protected static int GAME_HEIGHT = 640;
 	protected static float speedx = 5;
 	protected static float speedy = 3;
+	private static int playerpositionX = 50;
+	private static int playerpositionY = 510;
+	private static float stagepositionX = 30;
+	private static float stagepositionY = 100;
+	private static Ladders[] ladders;
+	private static int laddersposition = 440;
+	private static final int countladders = 3;
 	private Player player;
 	private MainStage stage;
-	private Ladders bandai;
 	private boolean check = false;
 	
 	public BillyGame(String title) {
@@ -40,17 +46,27 @@ public class BillyGame extends BasicGame{
 	public void init(GameContainer container) throws SlickException {
 		Color background = new Color(255, 255, 255);
 	    container.getGraphics().setBackground(background); 
-	    player = new Player(50,500, speedx , speedy);
-	    stage = new MainStage(30,100);
-	    bandai = new Ladders();
+	    player = new Player(playerpositionX,playerpositionY, speedx , speedy);
+	    stage = new MainStage(stagepositionX,stagepositionY);
+	    initladders();
 	    
+	}
+	
+	private void initladders() throws SlickException {
+		ladders = new Ladders[countladders];
+		for(int i = 0; i < countladders; i++) {
+			ladders[i] = new Ladders(laddersposition);
+	    	laddersposition -= 170;
+		}
 	}
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		stage.render();
 		player.render();
-		bandai.render();
+		for(int i = 0; i < countladders; i++) {
+			ladders[i].render();
+		}
 	}
 	
 	@Override
@@ -77,5 +93,6 @@ public class BillyGame extends BasicGame{
 			player.leftright(check);
 		}
 	}
-
+	
+	
 }

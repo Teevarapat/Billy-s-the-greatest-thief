@@ -27,10 +27,14 @@ public class Player {
 	
 	public void updown(boolean up) {
 		if(up == true){
-			positionY -= speedofbillyY;
+			//if(positionX == Ladders.checkplayer[0] + 22.5) {
+				positionY -= speedofbillyY;
+			//}
 		}
 		else {
-			positionY += speedofbillyY;
+			//if(positionX == Ladders.checkplayer[0] + 22.5) {
+				positionY += speedofbillyY;
+			//}
 		}
 	}
 	
