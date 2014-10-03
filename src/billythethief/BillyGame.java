@@ -25,6 +25,7 @@ public class BillyGame extends BasicGame{
 	private MainStage stage;
 	private static Random rand = new Random();
 	private int rangeoffloor = 170;
+	private int widthladder = 90;
 	
 	public BillyGame(String title) {
 		super(title);
@@ -109,7 +110,7 @@ public class BillyGame extends BasicGame{
 		
 		for(int i = 0; i < countladders; i++) {
 			
-			if(player.getX()>=ladders[i].getX() && player.getX()+30 <= ladders[i].getX()+90){
+			if(player.getX()>=ladders[i].getX() && player.getX()+30 <= ladders[i].getX()+widthladder){
 				if(player.getY()+100>=ladders[i].getY()+ 5 && player.getY()+100<=ladders[i].getY()+170) {
 					return true;
 				}
