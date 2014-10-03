@@ -1,5 +1,7 @@
 package billythethief;
 
+import java.util.Random;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -12,8 +14,6 @@ public class BillyGame extends BasicGame{
 	
 	protected static int GAME_WIDTH = 960;
 	protected static int GAME_HEIGHT = 640;
-	protected static float speedx = 5;
-	protected static float speedy = 3;
 	private static int playerpositionX = 50;
 	private static int playerpositionY = 510;
 	private static float stagepositionX = 30;
@@ -23,7 +23,8 @@ public class BillyGame extends BasicGame{
 	private static final int countladders = 3;
 	private Player player;
 	private MainStage stage;
-	private boolean check = false;
+	private static Random rand = new Random();
+	private int rangeoffloor = 170;
 	
 	public BillyGame(String title) {
 		super(title);
@@ -46,7 +47,7 @@ public class BillyGame extends BasicGame{
 	public void init(GameContainer container) throws SlickException {
 		Color background = new Color(255, 255, 255);
 	    container.getGraphics().setBackground(background); 
-	    player = new Player(playerpositionX,playerpositionY, speedx , speedy);
+	    player = new Player(playerpositionX,playerpositionY);
 	    stage = new MainStage(stagepositionX,stagepositionY);
 	    initladders();
 	    
@@ -55,11 +56,16 @@ public class BillyGame extends BasicGame{
 	private void initladders() throws SlickException {
 		ladders = new Ladders[countladders];
 		for(int i = 0; i < countladders; i++) {
-			ladders[i] = new Ladders(laddersposition);
-	    	laddersposition -= 170;
+			ladders[i] = new Ladders(RandomXLadders(),laddersposition);
+	    	laddersposition -= rangeoffloor;
 		}
 	}
 	
+	
+	private int RandomXLadders() {
+		return rand.nextInt(Ladders.maxX - Ladders.minX) + Ladders.minX;
+	}
+
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		stage.render();
@@ -73,26 +79,70 @@ public class BillyGame extends BasicGame{
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
 		updateMovement(input, delta);
+		System.out.println(""+Player.getY());
 	}
 	
 	public void updateMovement(Input input, int delta) {
-		if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
-			check = true;
-			player.updown(check);
-	    }
-		if(input.isKeyDown( Input.KEY_DOWN ) || input.isKeyDown(Input.KEY_S)){
-			check = false;
-			player.updown(check);
+		if(moveableup()) {
+			if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
+				player.up();
+			}
 		}
-		if(input.isKeyDown(Input.KEY_LEFT ) || input.isKeyDown(Input.KEY_A)){
-			check = true;
-			player.leftright(check);
+		
+		if(moveabledown()){
+			if(input.isKeyDown( Input.KEY_DOWN ) || input.isKeyDown(Input.KEY_S)){
+				player.down();
+			}
 		}
-		if(input.isKeyDown(Input.KEY_RIGHT ) || input.isKeyDown(Input.KEY_D)){
-			check = false;
-			player.leftright(check);
+		
+//		if(Player.getY()+100 >= 439 && Player.getY()+100 <= 460){
+//			if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
+//				player.up();
+//			}
+//			if(input.isKeyDown( Input.KEY_DOWN ) || input.isKeyDown(Input.KEY_S)){
+//				player.down();
+//			}
+//			System.out.println("yo");
+//		}
+		if(canMoveLR()) {
+			if(input.isKeyDown(Input.KEY_LEFT ) || input.isKeyDown(Input.KEY_A)){
+				player.left();
+			}
+			if(input.isKeyDown(Input.KEY_RIGHT ) || input.isKeyDown(Input.KEY_D)){
+				player.right();
+			}
 		}
 	}
 	
+	public boolean moveableup() {
+		
+		for(int i = 0; i < countladders; i++) {
+			if(Player.getY()+100>=ladders[i].getY()+ 5 && Player.getY()+100<=ladders[i].getY()+170) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean moveabledown(){
+		
+		for(int i=0; i<3; i++){
+			if(Player.getX()>=ladders[i].getX() && Player.getX()+30<=ladders[i].getX()+90){
+				if(Player.getY()+100>=ladders[i].getY()-20 && Player.getY()+100<=ladders[i].getY()+165){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean canMoveLR() {
+		for(int i=2; i>=0; i--){
+			if(Player.getY() == 150 + 170*i){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

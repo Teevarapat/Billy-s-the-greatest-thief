@@ -6,50 +6,67 @@ import org.newdawn.slick.SlickException;
 public class Player {
 
 	private Image image;
-	private float positionX;
-	private float positionY;
-	private float speedofbillyX;
-	private float speedofbillyY;
+	private static float pX;
+	private static float pY;
+	private float speedofbillyX = 5;
+	private float speedofbillyY = 3;
 	private float minX = 45;
 	private float maxX = 885;
 	
-	public Player (float x ,float y , float speedx , float speedy) throws SlickException{
-		this.positionX = x;
-		this.positionY = y;
-		this.speedofbillyX = speedx;
-		this.speedofbillyY = speedy;
+	public Player (float x ,float y) throws SlickException{
+		pX = x;
+		pY = y;
 		image = new Image("res/stick.png");
 	}
 
 	public void render() {
-		image.draw( positionX, positionY);
+		image.draw( pX, pY);
 	}
 	
-	public void updown(boolean up) {
-		if(up == true){
-			//if(positionX == Ladders.checkplayer[0] + 22.5) {
-				positionY -= speedofbillyY;
-			//}
-		}
-		else {
-			//if(positionX == Ladders.checkplayer[0] + 22.5) {
-				positionY += speedofbillyY;
-			//}
+	public void up() {
+		pY -= speedofbillyY;
+		if(pY + 100 < 100) {
+			pY = 0;
 		}
 	}
 	
-	public void leftright (boolean left) {
-		if(left == true){
-			positionX -= speedofbillyX;
-			if(positionX <= minX) {
-				positionX = minX;
-			}
-		}
-		else {
-			positionX += speedofbillyX;
-			if(positionX >= maxX){
-				positionX = maxX;
-			}
+	public void down() {
+		pY += speedofbillyY;
+		if(pY + 100 >= 610 ){
+			pY = 510;
 		}
 	}
+	
+	public void left() {
+		pX -= speedofbillyX;
+			if(pX <= minX) {
+				pX = minX;
+		}
+	}
+	
+	public void right(){
+		pX += speedofbillyX;
+			if(pX >= maxX){
+				pX = maxX;
+			}
+	}
+	
+//	public static int floor() {
+//		if(pY < 170) {
+//			System.out.println("2");
+//			return 2;
+//		}
+//		else if(pY > 340){
+//			System.out.println("0");
+//			return 0;
+//		}
+//		else {
+//			System.out.println("1");
+//			return 1;
+//		}
+//	}
+	
+	public static float getX() { return pX; }
+	
+	public static float getY() { return pY; }
 }
