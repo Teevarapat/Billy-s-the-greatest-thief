@@ -9,7 +9,7 @@ public class Player {
 	private static float pX;
 	private static float pY;
 	private float speedofbillyX = 5;
-	private float speedofbillyY = 3;
+	private float speedofbillyY = 5;
 	private float minX = 45;
 	private float maxX = 885;
 	
@@ -66,7 +66,7 @@ public class Player {
 //		}
 //	}
 	
-	public static float getX() { return pX; }
+	public  float getX() { return pX; }
 	
-	public static float getY() { return pY; }
+	public  float getY() { return pY; }
 }

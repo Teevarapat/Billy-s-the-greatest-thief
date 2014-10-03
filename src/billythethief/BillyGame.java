@@ -79,7 +79,7 @@ public class BillyGame extends BasicGame{
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
 		updateMovement(input, delta);
-		System.out.println(""+Player.getY());
+		System.out.println(""+player.getY());
 	}
 	
 	public void updateMovement(Input input, int delta) {
@@ -95,15 +95,6 @@ public class BillyGame extends BasicGame{
 			}
 		}
 		
-//		if(Player.getY()+100 >= 439 && Player.getY()+100 <= 460){
-//			if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
-//				player.up();
-//			}
-//			if(input.isKeyDown( Input.KEY_DOWN ) || input.isKeyDown(Input.KEY_S)){
-//				player.down();
-//			}
-//			System.out.println("yo");
-//		}
 		if(canMoveLR()) {
 			if(input.isKeyDown(Input.KEY_LEFT ) || input.isKeyDown(Input.KEY_A)){
 				player.left();
@@ -117,8 +108,11 @@ public class BillyGame extends BasicGame{
 	public boolean moveableup() {
 		
 		for(int i = 0; i < countladders; i++) {
-			if(Player.getY()+100>=ladders[i].getY()+ 5 && Player.getY()+100<=ladders[i].getY()+170) {
-				return true;
+			
+			if(player.getX()>=ladders[i].getX() && player.getX()+30 <= ladders[i].getX()+90){
+				if(player.getY()+100>=ladders[i].getY()+ 5 && player.getY()+100<=ladders[i].getY()+170) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -127,8 +121,8 @@ public class BillyGame extends BasicGame{
 	public boolean moveabledown(){
 		
 		for(int i=0; i<3; i++){
-			if(Player.getX()>=ladders[i].getX() && Player.getX()+30<=ladders[i].getX()+90){
-				if(Player.getY()+100>=ladders[i].getY()-20 && Player.getY()+100<=ladders[i].getY()+165){
+			if(player.getX()>=ladders[i].getX() && player.getX()+30<=ladders[i].getX()+90){
+				if(player.getY()+100 >= ladders[i].getY()-20 && player.getY()+100 <= ladders[i].getY()+165) {
 					return true;
 				}
 			}
@@ -137,8 +131,8 @@ public class BillyGame extends BasicGame{
 	}
 	
 	private boolean canMoveLR() {
-		for(int i=2; i>=0; i--){
-			if(Player.getY() == 150 + 170*i){
+		for(int i= 0; i <= 3; i++){
+			if(player.getY() >= 150 + 170*i){
 				return true;
 			}
 		}
