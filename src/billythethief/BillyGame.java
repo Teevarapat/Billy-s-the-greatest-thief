@@ -20,12 +20,17 @@ public class BillyGame extends BasicGame{
 	private static float stagepositionY = 100;
 	private static Ladders[] ladders;
 	private static int laddersposition = 440;
-	private static final int countladders = 3;
+	private static int countladders = 3;
 	private Player player;
 	private MainStage stage;
 	private static Random rand = new Random();
 	private int rangeoffloor = 170;
 	private int widthladder = 90;
+	private Enemy [] enemys;
+	private int countenemy = 2;
+	public int enemypositionY = 340;
+	public int orderenemy = 0;
+	
 	
 	public BillyGame(String title) {
 		super(title);
@@ -51,9 +56,25 @@ public class BillyGame extends BasicGame{
 	    player = new Player(playerpositionX,playerpositionY);
 	    stage = new MainStage(stagepositionX,stagepositionY);
 	    initladders();
+	    initenemys();
 	    
 	}
 	
+	private void initenemys() throws SlickException {
+		enemys = new Enemy[countenemy];
+		for(int i = 0; i < countenemy; i++) {
+			if(i == 0) {
+				orderenemy = Enemy.firstenemy;
+			}
+			if(i == 1) {
+				orderenemy = Enemy.secondenemy;
+			}
+			enemys[i] = new Enemy(enemypositionY , orderenemy);
+			enemypositionY -= rangeoffloor;
+		}
+		
+	}
+
 	private void initladders() throws SlickException {
 		ladders = new Ladders[countladders];
 		for(int i = 0; i < countladders; i++) {
@@ -71,6 +92,9 @@ public class BillyGame extends BasicGame{
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		stage.render();
 		player.render();
+		for(Enemy enemy : enemys) {
+			enemy.render();
+		}
 		for(int i = 0; i < countladders; i++) {
 			ladders[i].render();
 		}
@@ -80,6 +104,15 @@ public class BillyGame extends BasicGame{
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
 		updateMovement(input, delta);
+		for(int i = 0; i < countenemy; i++) {
+			if(i == 0){
+				orderenemy = 0;
+			}
+			if(i == 1) {
+				orderenemy = 1;
+			}
+			enemys[i].update();
+		}
 		System.out.println(""+player.getY());
 	}
 	

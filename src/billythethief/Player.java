@@ -51,21 +51,6 @@ public class Player {
 			}
 	}
 	
-//	public static int floor() {
-//		if(pY < 170) {
-//			System.out.println("2");
-//			return 2;
-//		}
-//		else if(pY > 340){
-//			System.out.println("0");
-//			return 0;
-//		}
-//		else {
-//			System.out.println("1");
-//			return 1;
-//		}
-//	}
-	
 	public  float getX() { return pX; }
 	
 	public  float getY() { return pY; }

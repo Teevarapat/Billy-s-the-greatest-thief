@@ -13,7 +13,6 @@ public class Ladders {
 	public static int maxX = 800;
 	static int i = 0;
 	public static boolean canmove = false;
-	private static int [] check = new int [3];
 	private Image image;
 	
 	public Ladders(){
@@ -34,12 +33,6 @@ public class Ladders {
 	}
 	public float getY(){
 		return positionY;
-	}
-	
-	public void print() {
-		for(int j = 0; j < 3; j++) {
-			System.out.println("check" + j + " " + check[j]);
-		}
 	}
 	
 }
