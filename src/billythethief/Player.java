@@ -3,6 +3,7 @@ package billythethief;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+
 public class Player {
 
 	private Image image;
@@ -49,6 +50,11 @@ public class Player {
 			if(pX >= maxX){
 				pX = maxX;
 			}
+	}
+	
+	public boolean isCollide(Enemy p) {
+		return checkcollision.collide(pX, pY, p.getX(), p.getY());
+	
 	}
 	
 	public  float getX() { return pX; }

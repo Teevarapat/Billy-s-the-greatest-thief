@@ -27,9 +27,9 @@ public class BillyGame extends BasicGame{
 	private int rangeoffloor = 170;
 	private int widthladder = 90;
 	private Enemy [] enemys;
-	private int countenemy = 2;
+	private int countenemy = 1;
 	public int enemypositionY = 340;
-	public int orderenemy = 0;
+	private boolean isgameover;
 	
 	
 	public BillyGame(String title) {
@@ -57,19 +57,15 @@ public class BillyGame extends BasicGame{
 	    stage = new MainStage(stagepositionX,stagepositionY);
 	    initladders();
 	    initenemys();
+	    isgameover = false;
 	    
 	}
 	
 	private void initenemys() throws SlickException {
 		enemys = new Enemy[countenemy];
 		for(int i = 0; i < countenemy; i++) {
-			if(i == 0) {
-				orderenemy = Enemy.firstenemy;
-			}
-			if(i == 1) {
-				orderenemy = Enemy.secondenemy;
-			}
-			enemys[i] = new Enemy(enemypositionY , orderenemy);
+		
+			enemys[i] = new Enemy(enemypositionY);
 			enemypositionY -= rangeoffloor;
 		}
 		
@@ -98,22 +94,26 @@ public class BillyGame extends BasicGame{
 		for(int i = 0; i < countladders; i++) {
 			ladders[i].render();
 		}
+		if(isgameover == true) {
+			
+		}
 	}
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		Input input = container.getInput();
-		updateMovement(input, delta);
-		for(int i = 0; i < countenemy; i++) {
-			if(i == 0){
-				orderenemy = 0;
+		if(isgameover == false){
+			Input input = container.getInput();
+			updateMovement(input, delta);
+			for(int i = 0; i < countenemy; i++) {
+				enemys[i].update();
 			}
-			if(i == 1) {
-				orderenemy = 1;
+			for(int i = 0; i < countenemy; i++) {
+				if(player.isCollide(enemys[i]) == true) {
+					isgameover = true;
+				}
 			}
-			enemys[i].update();
+			System.out.println(""+player.getY());
 		}
-		System.out.println(""+player.getY());
 	}
 	
 	public void updateMovement(Input input, int delta) {

@@ -14,47 +14,37 @@ public class Enemy {
 	private int positionY;
 	private int positionX = 50;
 	private int vx;
-	private int orderenemy;
 	public static int firstenemy = 0;
 	public static int secondenemy = 1;
 	
-	public Enemy(int y,int order) throws SlickException{
+	public Enemy(int y) throws SlickException{
 		this.positionY = y;
-		this.orderenemy = order;
 		image = new Image("res/Enemy.png");
 	}
 	
 	public void render() {
-		if(orderenemy == firstenemy)
-			image.draw(885,positionY);
-		else
-			image.draw( positionX, positionY);
+		image.draw( positionX, positionY);
 		
 	}
 	
-	public void update() {
-		if(orderenemy == firstenemy) {
-			System.out.println("Ready to move first");
-			positionX -= randomvelocity();
+	public void update() { 
+		positionX += randomvelocity();
 			if(positionX >= 885) {
-				positionX = 885;
-			}
-		if(orderenemy == secondenemy) {
-			System.out.println("Ready to move second");
-			positionX += randomvelocity();
-			if(positionX <= 45) {
 				positionX = 45;
+				positionY = 170 + 170*randompositionY();
 			}
-		}
-//			check++;
-//			if(positionX <= 45){
-//				check = 0;
-//			}
-		}
+			
+	}
+
+	private int randompositionY() {
+		int i;
+		i = rand.nextInt(2);
+		return i;
+		
 	}
 
 	private int randomvelocity() {
-		this.vx = 5+rand.nextInt(5);
+		this.vx = 10+rand.nextInt(5);
 		return vx;
 	}
 	
@@ -62,5 +52,11 @@ public class Enemy {
 //		this.positionX = rand.nextInt(maxposition - minposition) + minposition;
 //		return positionX;
 //	}
+	public float getX(){
+		return positionX;
+	}
+	public float getY(){
+		return positionY;
+	}
 
 }
