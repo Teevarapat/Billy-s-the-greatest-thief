@@ -28,6 +28,7 @@ public class Player {
 		pY -= speedofbillyY;
 		if(pY + 100 < 100) {
 			pY = 0;
+			BillyGame.youwin = true;
 		}
 	}
 	

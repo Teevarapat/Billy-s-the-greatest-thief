@@ -30,7 +30,8 @@ public class BillyGame extends BasicGame{
 	private int countenemy = 1;
 	public int enemypositionY = 340;
 	private boolean isgameover;
-	
+	private boolean restart;
+	public static boolean youwin;
 	
 	public BillyGame(String title) {
 		super(title);
@@ -58,6 +59,8 @@ public class BillyGame extends BasicGame{
 	    initladders();
 	    initenemys();
 	    isgameover = false;
+	    restart = false;
+	    youwin = false;
 	    
 	}
 	
@@ -95,7 +98,10 @@ public class BillyGame extends BasicGame{
 			ladders[i].render();
 		}
 		if(isgameover == true) {
-			
+			stage.lose();
+		}
+		if(youwin == true) {
+			stage.win();
 		}
 	}
 	
@@ -113,6 +119,10 @@ public class BillyGame extends BasicGame{
 				}
 			}
 			System.out.println(""+player.getY());
+		}
+		
+		if(restart) {
+			container.reinit();
 		}
 	}
 	
@@ -136,6 +146,15 @@ public class BillyGame extends BasicGame{
 			if(input.isKeyDown(Input.KEY_RIGHT ) || input.isKeyDown(Input.KEY_D)){
 				player.right();
 			}
+		}
+		
+	}
+	
+	@Override
+	public void keyPressed(int key, char c) {
+		if(key == Input.KEY_ENTER) {
+			restart = true;
+			laddersposition = 440;
 		}
 	}
 	
